@@ -4,7 +4,7 @@ Recovering the orbit of asteroid **433 Eros** from real telescope measurements, 
 
 > A personal project. It also served as the non-convex (hard) formulation in my AIT 203 Optimization course project at IIIT Bangalore.
 
-![Eros's fitted orbit](imgs_for_readme/orbit.png)
+<p align="center"><img src="imgs_for_readme/orbit.png" alt="Eros's fitted orbit" width="450"></p>
 
 ---
 
@@ -39,7 +39,7 @@ Our aim is to extract and store, for every observation: `jd_utc` (the observatio
 
 ### `MPC_Observations_433Eros.json`
 
-![A single OBS80 entry](imgs_for_readme/obs80_entry.png)
+<p align="center"><img src="imgs_for_readme/obs80_entry.png" alt="A single OBS80 entry" width="100%"></p>
 
 We extract:
 
@@ -50,7 +50,7 @@ We extract:
 
 ### `MPC_Observatory_Codes.json`
 
-![An observatory code entry](imgs_for_readme/obscode_entry.png)
+<p align="center"><img src="imgs_for_readme/obscode_entry.png" alt="An observatory code entry" width="100%"></p>
 
 Using the Obscode obtained previously, we look up the dict and get:
 
@@ -104,7 +104,7 @@ $$
 
 ### Adding arrows
 
-![The vectors and the light delay](imgs_for_readme/light_delay_vectors.png)
+<p align="center"><img src="imgs_for_readme/light_delay_vectors.png" alt="The vectors and the light delay" width="650"></p>
 
 $$\mathbf{r}_3 = \mathbf{r}_1 + \mathbf{r}_2, \qquad \mathbf{r}_3 + \mathbf{r}_5 = \mathbf{r}_4$$
 
@@ -117,7 +117,7 @@ $$\mathbf{r}_5 = \mathbf{r}_4(t - T) - \mathbf{r}_1(t) - \mathbf{r}_2(t)$$
 
 ### The telescope on the spinning Earth ($\mathbf{r}_2$)
 
-![d, h and L on the Earth](imgs_for_readme/telescope_position.png)
+<p align="center"><img src="imgs_for_readme/telescope_position.png" alt="d, h and L on the Earth" width="650"></p>
 
 - **d:** distance from the spin axis (MPC field `"cos"`, $\rho\cos\varphi'$, in Earth radii)
 - **h:** height above the equator (MPC field `"sin"`, $\rho\sin\varphi'$, in Earth radii)
@@ -132,7 +132,7 @@ $$\mathbf{r}_2 = \big(d\cos(\theta + L),\ d\sin(\theta + L),\ h\big)$$
 
 ### RA and Dec from $\mathbf{r}_5$
 
-![RA and Dec](imgs_for_readme/ra_dec.png)
+<p align="center"><img src="imgs_for_readme/ra_dec.png" alt="RA and Dec" width="650"></p>
 
 - **Right Ascension (RA):** how far *around* the equator, measured from x. $\ \text{RA} = \operatorname{atan2}(y, x)$, then wrapped into $0 \ldots 2\pi$.
 - **Declination (Dec):** how high *above* the equator. $\ \text{Dec} = \operatorname{atan2}\!\big(z, \sqrt{x^2 + y^2}\big)$, between $-\pi/2$ and $+\pi/2$.
@@ -187,7 +187,7 @@ Converting $\mathbf{r}_0$ and $\mathbf{v}_0$ into orbital elements ($\mathbf{r}_
 
 ## Proof that the objective is non-convex
 
-![The objective rises above its chord](figures/nonconvex_line.png)
+<p align="center"><img src="figures/nonconvex_line.png" alt="The objective rises above its chord" width="650"></p>
 
 Midpoint of two orbits: $\chi^2 = 6.8 \times 10^{13}$ > average of the ends, $3.8 \times 10^{13}$. A convex function can never do this.
 
@@ -195,7 +195,7 @@ Midpoint of two orbits: $\chi^2 = 6.8 \times 10^{13}$ > average of the ends, $3.
 
 How the RMSE changes on adding a non-realistic assumption, like neglecting the light travel time or neglecting the $\mathbf{r}_2$ vector:
 
-![Which physics matters](figures/ablation.png)
+<p align="center"><img src="figures/ablation.png" alt="Which physics matters" width="650"></p>
 
 ---
 
