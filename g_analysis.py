@@ -4,7 +4,6 @@ from b_constants import GM_SUN, c, ARCSEC
 from d_relativePosition import R1, R2, R4
 
 
-
 '''
 Why a separate predict() when d_ already has result():
     1. Same chain as result(): r5 = r4(t - T) - r1(t) - r2(t), then atan2 for RA, Dec
@@ -141,19 +140,18 @@ Runs all three tests on the orbit f_method1 saved, prints the numbers, saves the
 '''
 if __name__ == "__main__":
     import h_plots
-    sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-    import process_data
+    import _process_data
 
     HERE = os.path.dirname(os.path.abspath(__file__))
     with open(os.path.join(HERE, "results", "hard_orbit.json")) as f:
         o = json.load(f)
     x, t0 = np.concatenate([o["r0"], o["v0"]]), o["t0"]
 
-    fit_data = process_data.get_arrays(process_data.FIT_START, process_data.FIT_END)
-    later = process_data.get_arrays(process_data.HOLDOUT_START, process_data.HOLDOUT_END)
+    fit_data = _process_data.get_arrays(_process_data.FIT_START, _process_data.FIT_END)
+    later = _process_data.get_arrays(_process_data.HOLDOUT_START, _process_data.HOLDOUT_END)
     window = lambda a: (a["jd_utc"], a["ra"], a["dec"], a["d"], a["h"], a["L"])
     jd_utc, ra, dec, d, h, L = window(fit_data)
-    t_end = process_data.calendar_to_jd(*process_data.FIT_END)
+    t_end = _process_data.calendar_to_jd(*_process_data.FIT_END)
 
     print("=" * 60, "\nTest 1: predictions on data the fit never saw\n" + "=" * 60)
     days, miss, monthly = predictions(x, t0, *window(later), t_end)

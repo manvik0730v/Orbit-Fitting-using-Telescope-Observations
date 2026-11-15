@@ -2,8 +2,7 @@
 from a_imports import *
 from b_constants import ARCSEC, GM_SUN
 
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-from process_data import get_arrays, FIT_START, FIT_END 
+from _process_data import get_arrays, FIT_START, FIT_END 
 from d_relativePosition import result, R1, R2, R4
 # Firstly we load all the data
 start = FIT_START
@@ -13,13 +12,9 @@ data = get_arrays(start,end)
 Data is of the format: {"jd_utc": [..], "ra": [..], "dec": [..], "d": [..], "h": [..], "L": [..], "codes": [..]}
 We load them into indivual ndarrays
 '''
-jd_utc = data["jd_utc"]
-ra = data["ra"]
-dec = data["dec"]
-d = data["d"]
-h = data["h"]
-L = data["L"]
-obscodes = data["codes"]
+jd_utc, ra, dec, d, h, L, obscodes = data["jd_utc"], data["ra"], data["dec"], data["d"], data["h"], data["L"], data["codes"]
+
+# t0 set arbitrarily
 t0 = 2460987.5
 
 # y is again the phase vector [x,y,z,vx,vy,vz]
@@ -93,17 +88,18 @@ def gauss(i1, i2, i3):
 if __name__ == "__main__":
     start_time = time.time()
     N = len(d)
-    i1 = 0
-    i2 = N//2
-    i3 = N-1
+    i1, i2, i3 = 0, N//2, N-1
     y0 = min(gauss(i1, i2, i3), key = lambda y: np.sum(miss(y)**2))
     sol = least_squares(miss, y0, x_scale = "jac")
     end_time = time.time()
 
     J = sol.jac
-    print("Gradient should be ~0 :", np.abs(sol.grad).max())
-    print("JᵀJ shd be Positive Definite:", np.linalg.eigvalsh(J.T @ J))
-    print("Final RMS Error:", np.sqrt(np.mean(sol.fun**2)), "arcseconds")
+    rel = np.abs(J.T @ sol.fun) / (np.linalg.norm(J, axis = 0) * np.linalg.norm(sol.fun))
+    print("=========== Results ==============")
+    print("- Relative Gradient:", rel)
+    print("- JᵀJ:", np.linalg.eigvalsh(J.T @ J))
+    print("- Final RMS Error:", np.sqrt(np.mean(sol.fun**2)), "arcseconds")
+    print(sol.message)
 
     HERE = os.path.dirname(os.path.abspath(__file__))
     RESULT = os.path.join(HERE, "results")
