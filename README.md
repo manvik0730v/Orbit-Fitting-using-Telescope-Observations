@@ -134,9 +134,9 @@ $$\mathbf{r}_2 = \big(d\cos(\theta + L),\ d\sin(\theta + L),\ h\big)$$
 
 <p align="center"><img src="imgs_for_readme/ra_dec.png" alt="RA and Dec" width="650"></p>
 
-- **Right Ascension (RA):** how far *around* the equator, measured from x. $\ \text{RA} = \operatorname{atan2}(y, x)$, then wrapped into $0 \ldots 2\pi$.
-- **Declination (Dec):** how high *above* the equator. $\ \text{Dec} = \operatorname{atan2}\!\big(z, \sqrt{x^2 + y^2}\big)$, between $-\pi/2$ and $+\pi/2$.
-- **Why atan2 and not arctan(y/x)?** $\operatorname{atan2}(y, x)$ is the angle of the point $(x, y)$ in the right quadrant; $\arctan(y/x)$ can't tell $(1, 1)$ from $(-1, -1)$.
+- **Right Ascension (RA):** how far *around* the equator, measured from x. $\ \text{RA} = \mathrm{atan2}(y, x)$, then wrapped into $0 \ldots 2\pi$.
+- **Declination (Dec):** how high *above* the equator. $\ \text{Dec} = \mathrm{atan2}\!\big(z, \sqrt{x^2 + y^2}\big)$, between $-\pi/2$ and $+\pi/2$.
+- **Why atan2 and not arctan(y/x)?** $\mathrm{atan2}(y, x)$ is the angle of the point $(x, y)$ in the right quadrant; $\arctan(y/x)$ can't tell $(1, 1)$ from $(-1, -1)$.
 - $\mathbf{r}_5$'s length doesn't matter here, only its direction.
 
 ---
