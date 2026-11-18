@@ -1,5 +1,6 @@
 """Numerical checks for ray geometry, convex fits, and the hard baseline."""
 import unittest
+from pypdf import PdfReader
 import numpy as np
 from scipy.linalg import solve
 from _process_data import get_arrays
@@ -36,6 +37,13 @@ class EasyTests(unittest.TestCase):
         pred=v/np.linalg.norm(v,axis=1)[:,None]
         sep=np.arccos(np.clip(np.sum(pred*self.u,axis=1),-1,1))*206264.806
         self.assertLess(float(np.sqrt(np.mean(sep**2))),1.0)
+    def test_merged_pdf(self):
+        original=PdfReader('easy/slides/original_deck.pdf'); merged=PdfReader('easy/slides/Orbit_Fitting_with_easy.pdf')
+        self.assertEqual(len(original.pages),21)
+        self.assertEqual(len(merged.pages),28)
+        for i,page in enumerate(original.pages):
+            j=i if i<8 else i+6
+            self.assertEqual(page.get_contents().get_data(),merged.pages[j].get_contents().get_data())
     def test_lp_l1_dominates_ls(self):
         f=fit(self.tau,self.u,self.R,2)
         coeff,obj,_=fit_l1(self.tau,self.u,self.R,2)
